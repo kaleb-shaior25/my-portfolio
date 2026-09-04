@@ -96,23 +96,33 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
 }
 
 /* ============================================================ 4. HERO ============================================================ */
-.hero{border-bottom:1px solid var(--linea)}
-.hero__media{position:relative;width:100%;height:clamp(360px,64vh,680px);overflow:hidden;background:var(--vino-hondo)}
-.hero__media img{width:100%;height:100%;object-fit:cover;object-position:center 42%}
-.hero__bar{background:var(--tinta);color:var(--hueso);padding:26px var(--gutter)}
-.hero__bar-inner{max-width:var(--max);margin-inline:auto;display:flex;flex-wrap:wrap;gap:14px 40px;align-items:baseline}
-.hero h1{font-size:clamp(2.1rem,6.2vw,5.1rem);text-transform:uppercase;letter-spacing:-.03em;line-height:.92}
-.hero__roles{display:flex;flex-wrap:wrap;gap:8px 0;align-items:center;padding:0;margin:0;
-  font-family:var(--serif-no);font-weight:700;font-size:clamp(.68rem,1.1vw,.8rem);
-  text-transform:uppercase;letter-spacing:.16em;color:var(--hueso)}
+.hero{border-bottom:1px solid var(--linea);padding-block:clamp(34px,6vh,72px)}
+.hero__grid{display:grid;gap:clamp(26px,4vw,54px);align-items:center}
+@media (min-width:900px){.hero__grid{grid-template-columns:minmax(0,44%) minmax(0,1fr)}}
+
+/* Caja de slideshow: las diapositivas se apilan y se funden entre sí */
+.slides{position:relative;width:100%;aspect-ratio:4/3;overflow:hidden;background:var(--hueso-alt);
+  border:1px solid var(--linea)}
+.slides img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transition:opacity 1.15s cubic-bezier(.4,0,.2,1);will-change:opacity}
+.slides img.is-on{opacity:1}
+.slides__dots{position:absolute;left:14px;bottom:14px;z-index:2;display:flex;gap:7px}
+.slides__dots button{width:8px;height:8px;border-radius:50%;background:rgba(247,245,242,.45);
+  padding:0;transition:background .3s,transform .3s;box-shadow:0 0 0 1px rgba(18,18,18,.25)}
+.slides__dots button[aria-current="true"]{background:var(--hueso);transform:scale(1.35)}
+
+.hero h1{font-size:clamp(2.1rem,5.4vw,4.4rem);text-transform:uppercase;letter-spacing:-.03em;line-height:.94}
+.hero__roles{display:flex;flex-wrap:wrap;gap:6px 0;align-items:center;padding:0;margin:22px 0 0;
+  font-family:var(--serif-no);font-weight:700;font-size:clamp(.68rem,1.05vw,.8rem);
+  text-transform:uppercase;letter-spacing:.16em;color:var(--tinta)}
 .hero__roles li{list-style:none}
-.hero__roles li:not(:last-child)::after{content:'·';color:var(--vino-luz);margin:0 12px;font-weight:900}
-.hero__place{font-family:var(--serif-no);font-weight:700;font-size:.7rem;text-transform:uppercase;
-  letter-spacing:.2em;color:var(--vino-luz);margin-left:auto}
-@media (max-width:920px){.hero__place{margin-left:0;width:100%}}
+.hero__roles li:not(:last-child)::after{content:'·';color:var(--vino);margin:0 11px;font-weight:900}
+.hero__place{display:block;margin-top:16px;font-family:var(--serif-no);font-weight:700;font-size:.7rem;
+  text-transform:uppercase;letter-spacing:.2em;color:var(--vino)}
 
 /* ============================================================ 5. SECCIÓN ============================================================ */
 .sec{padding-block:var(--sec-y);scroll-margin-top:70px}
+#proyectos{padding-top:clamp(46px,6vh,84px)}
 .sec--alt{background:var(--hueso-alt)}
 .sec__head{display:grid;grid-template-columns:1fr;gap:16px;padding-bottom:36px;margin-bottom:56px;border-bottom:2px solid var(--tinta)}
 .sec__head h2{font-size:clamp(1.9rem,4.6vw,3.4rem);text-transform:uppercase}
@@ -120,10 +130,14 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
 @media (min-width:900px){.sec__head{grid-template-columns:minmax(0,1fr) minmax(0,44ch);align-items:end;gap:48px}}
 
 /* ============================================================ 6. PROYECTOS ============================================================ */
-.projects{display:grid;gap:clamp(56px,7vw,104px)}
+/* El espacio interno de un proyecto (foto principal -> galería) es corto;
+   el que separa un proyecto del siguiente es largo. Antes eran iguales,
+   y eso hacía que la galería se leyera como un bloque suelto. */
+.projects{display:grid;gap:14px}
+.projects > .project:not(:first-child){margin-top:clamp(76px,9vw,132px)}
 .project{display:grid;gap:26px}
 @media (min-width:900px){
-  .project{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:52px;align-items:start}
+  .project{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:52px;align-items:center}
   .project--flip .project__media{order:2}
 }
 .project__media{position:relative;overflow:hidden;background:var(--hueso-alt)}
@@ -141,6 +155,14 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
 .credit{display:block;margin-top:18px;padding-top:14px;border-top:1px solid var(--linea);
   font-size:.8rem;color:var(--gris-2)}
 .credit b{font-weight:600;color:var(--tinta)}
+/* El segundo párrafo se pliega: con el texto completo, la columna
+   crecía por debajo de la imagen y abría un hueco a la izquierda. */
+.more-text[hidden]{display:none}
+.readmore{font-family:var(--serif-no);font-weight:700;font-size:.68rem;text-transform:uppercase;
+  letter-spacing:.16em;color:var(--vino);padding:9px 0 7px;border-bottom:1.5px solid var(--vino);
+  margin-top:2px;
+  transition:color .25s,border-color .25s}
+.readmore:hover{color:var(--vino-hondo);border-bottom-color:var(--vino-hondo)}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;padding:0;list-style:none}
 .tags li{border:1px solid var(--linea);padding:5px 11px;font-size:.68rem;font-weight:600;
   letter-spacing:.08em;text-transform:uppercase;color:var(--gris-2)}
@@ -150,6 +172,7 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
    Máximo 4 piezas visibles por proyecto; el resto se revela.
    ============================================================ */
 .spread{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:26px}
+.projects .spread{margin-top:4px}
 .spread--wide{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .spread button.pic{padding:0;display:block;position:relative;overflow:hidden;
   background:var(--hueso-alt);border:1px solid var(--linea);width:100%}
@@ -162,10 +185,21 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
   width:30px;height:30px;display:grid;place-items:center;opacity:0;transition:opacity .25s}
 .spread button.pic:hover::after,.spread button.pic:focus-visible::after{opacity:1}
 .spread button.pic[hidden]{display:none}
-.more{margin-top:14px;display:flex;justify-content:flex-start}
-.more button{font-family:var(--serif-no);font-weight:700;font-size:.72rem;text-transform:uppercase;
-  letter-spacing:.16em;border:2px solid var(--tinta);padding:11px 20px;transition:background .22s,color .22s}
-.more button:hover{background:var(--tinta);color:var(--hueso)}
+/* La última miniatura visible lleva el velo con "+N". Al pulsarla
+   se despliega el resto: no consume una fila extra bajo la galería. */
+.spread button.has-more::before{
+  content:'+' attr(data-more-n);position:absolute;inset:0;z-index:3;
+  background:rgba(18,18,18,.62);color:var(--hueso);
+  display:grid;place-items:center;font-family:var(--serif-no);font-weight:900;
+  font-size:clamp(1.3rem,2.4vw,1.9rem);letter-spacing:.04em;
+  transition:background .3s cubic-bezier(.4,0,.2,1)}
+.spread button.has-more:hover::before{background:rgba(122,30,50,.74)}
+.spread button.has-more::after{display:none}
+.less{margin-top:10px;display:flex;justify-content:flex-end}
+.less button{font-family:var(--serif-no);font-weight:700;font-size:.66rem;text-transform:uppercase;
+  letter-spacing:.16em;color:var(--gris-2);padding:9px 0 7px;border-bottom:1px solid var(--linea)}
+.less button:hover{color:var(--vino);border-bottom-color:var(--vino)}
+.less[hidden]{display:none}
 
 /* ============================================================ 8. EDITORIAL / INVESTIGACIÓN ============================================================ */
 .editorial{display:grid;gap:clamp(44px,5vw,76px)}
@@ -230,9 +264,18 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
 .foot div{max-width:var(--max);margin-inline:auto;display:flex;flex-wrap:wrap;gap:12px 32px;justify-content:space-between}
 
 /* ============================================================ 12. REVEAL ============================================================ */
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal{opacity:0;transform:translateY(34px);
+  transition:opacity 1.05s cubic-bezier(.16,1,.3,1),transform 1.15s cubic-bezier(.16,1,.3,1);
+  transition-delay:var(--d,0ms);will-change:opacity,transform}
 .reveal.is-in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}}
+/* La imagen se asienta desde un zoom mínimo: da peso a la entrada
+   sin que nada se desplace de sitio. */
+.reveal img{transform:scale(1.045);transition:transform 1.5s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0ms)}
+.reveal.is-in img{transform:none}
+.project__media:hover img{transform:scale(1.03)}
+@media (prefers-reduced-motion:reduce){
+  .reveal,.reveal img{opacity:1;transform:none;transition:none}
+}
 
 /* ============================================================
    13. LIGHTBOX
@@ -295,12 +338,25 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
 
 <!-- ============================================================ HERO ============================================================ -->
 <section class="hero" id="inicio">
-  <div class="hero__media">
-    <img src="assets/img/cv-01-escalinata-lago.webp" fetchpriority="high" decoding="async"
-         alt="Render del Centro de Visitantes en Valle de Bravo: muros de piedra oscura enmarcan la vista al lago bajo un cielo cargado, con figuras a escala sobre la plataforma.">
-  </div>
-  <div class="hero__bar">
-    <div class="hero__bar-inner">
+  <div class="wrap hero__grid">
+
+    <!-- Carrusel de renders arquitectónicos. Cambia solo si el
+         visitante no ha pedido reducir el movimiento. -->
+    <div class="slides reveal" id="slides" aria-roledescription="carrusel" aria-label="Proyectos de arquitectura">
+      <img class="is-on" src="assets/img/nu-01-museo-puuc.webp" fetchpriority="high" decoding="async"
+           alt="Museo Puuc en el Parque Nuevo Uxmal: volúmenes circulares de tierra y madera entre vegetación tropical.">
+      <img src="assets/img/cv-01-escalinata-lago.webp" loading="lazy" decoding="async"
+           alt="Centro de Visitantes en Valle de Bravo: muros de piedra oscura enmarcan la vista al lago bajo un cielo cargado.">
+      <img src="assets/img/ea-01-patio-central.webp" loading="lazy" decoding="async"
+           alt="Estancia Artística en Peña de Bernal: columnata de concreto en torno a un espejo de agua.">
+      <img src="assets/img/mp-01-plaza-santa-elena.webp" loading="lazy" decoding="async"
+           alt="Plaza de Santa Elena con pérgolas de bambú que dan sombra a bancas de piedra caliza.">
+      <img src="assets/img/nu-02-patio-interior.webp" loading="lazy" decoding="async"
+           alt="Patio interior del Museo Puuc: espejo de agua rodeado de vegetación densa.">
+      <div class="slides__dots" id="dots" role="tablist" aria-label="Elegir imagen"></div>
+    </div>
+
+    <div class="reveal" style="--d:120ms">
       <h1>Kaleb Shai<br>Ortega Robinson</h1>
       <ul class="hero__roles">
         <li data-es="Arquitecto"       data-en="Architect">Arquitecto</li>
@@ -310,6 +366,7 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
       </ul>
       <span class="hero__place" data-es="Ciudad de México" data-en="Mexico City">Ciudad de México</span>
     </div>
+
   </div>
 </section>
 
@@ -341,8 +398,11 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
           <span class="metric" data-es="Presentado ante profesores y alumnos de UT Austin, en Austin, Texas" data-en="Presented to UT Austin faculty and students, in Austin, Texas">Presentado ante profesores y alumnos de UT Austin, en Austin, Texas</span>
           <p data-es="Trabajo de campo en Mérida, Uxmal y los alrededores junto a estudiantes de maestría de UT Austin: entrevistas, transporte local, investigación de gabinete y acceso exclusivo al megaproyecto Parque Nuevo Uxmal durante su construcción. De ese material salió una cartera de proyectos a desarrollar."
              data-en="Field work in Mérida, Uxmal and the surrounding area alongside UT Austin graduate students: interviews, local transport, desk research and exclusive access to the Parque Nuevo Uxmal megaproject during construction. That material produced a portfolio of projects to develop.">Trabajo de campo en Mérida, Uxmal y los alrededores junto a estudiantes de maestría de UT Austin: entrevistas, transporte local, investigación de gabinete y acceso exclusivo al megaproyecto Parque Nuevo Uxmal durante su construcción. De ese material salió una cartera de proyectos a desarrollar.</p>
-          <p data-es="El Museo Puuc ocupa la zona 2 del parque y busca devolver identidad, memoria y protección patrimonial al sitio. Es una serie de volúmenes circulares en forma de célula; en el centro de cada uno hay vegetación o sistemas de captación y filtración de agua que desembocan en un ojo de agua común. Materiales ligeros y de la zona: maderas, piedras y acabados locales. La intervención incluyó además la UMA del parque, para mejorar las condiciones de la fauna que alberga."
+          <p class="more-text" hidden data-es="El Museo Puuc ocupa la zona 2 del parque y busca devolver identidad, memoria y protección patrimonial al sitio. Es una serie de volúmenes circulares en forma de célula; en el centro de cada uno hay vegetación o sistemas de captación y filtración de agua que desembocan en un ojo de agua común. Materiales ligeros y de la zona: maderas, piedras y acabados locales. La intervención incluyó además la UMA del parque, para mejorar las condiciones de la fauna que alberga."
              data-en="The Puuc Museum occupies zone 2 of the park and seeks to return identity, memory and heritage protection to the site. It is a series of circular, cell-shaped volumes; at the center of each sits planting or water catchment and filtration systems that drain into a shared water eye. Lightweight local materials: regional timber, stone and finishes. The intervention also covered the park's wildlife conservation unit, improving conditions for the fauna it houses.">El Museo Puuc ocupa la zona 2 del parque y busca devolver identidad, memoria y protección patrimonial al sitio. Es una serie de volúmenes circulares en forma de célula; en el centro de cada uno hay vegetación o sistemas de captación y filtración de agua que desembocan en un ojo de agua común. Materiales ligeros y de la zona: maderas, piedras y acabados locales. La intervención incluyó además la UMA del parque, para mejorar las condiciones de la fauna que alberga.</p>
+          <button type="button" class="readmore"
+            data-es="Leer más" data-en="Read more"
+            data-es-less="Leer menos" data-en-less="Read less">Leer más</button>
           <span class="credit" data-es="Museo Puuc en coautoría con Rodrigo Olivares. Workshop con la UNAM y la University of Texas at Austin, 2025."
                 data-en="Puuc Museum co-authored with Rodrigo Olivares. Workshop with UNAM and the University of Texas at Austin, 2025.">Museo Puuc en coautoría con Rodrigo Olivares. Workshop con la UNAM y la University of Texas at Austin, 2025.</span>
           <ul class="tags">
@@ -379,9 +439,8 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
           data-cap-es="Sesión de crítica en UT Austin, con la cartera completa de proyectos del workshop." data-cap-en="Review session at UT Austin, with the workshop&#x27;s full portfolio of projects.">
           <img src="assets/img/nu-09-presentacion-ut-b.webp" loading="lazy" decoding="async" alt="Segunda vista de la presentación en UT Austin, con los paneles del proyecto desplegados y el público sentado."></button>
       </div>
-      <div class="more reveal"><button type="button" data-more="uxmal"
-        data-es="Ver 4 imágenes más" data-en="View 4 more images"
-        data-es-less="Ver menos" data-en-less="View less">Ver 4 imágenes más</button></div>
+      <div class="less" data-less="uxmal" hidden><button type="button"
+        data-es="Ver menos" data-en="View less">Ver menos</button></div>
 
       <!-- ---------- 02 · CENTRO DE VISITANTES ---------- -->
       <article class="project project--flip reveal">
@@ -395,8 +454,11 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
           <h3 data-es="Centro de Visitantes" data-en="Visitor Center">Centro de Visitantes</h3>
           <p data-es="El nivel del lago de Valle de Bravo sube y baja según la época del año. En lugar de defenderse de esa oscilación, el proyecto la incorpora: está hecho para hundirse a propósito, y los muros que contienen el agua se convierten en muelles cuando el nivel desciende."
              data-en="The water level of Lake Valle de Bravo rises and falls with the season. Rather than defending against that swing, the project incorporates it: it is built to flood on purpose, and the walls that hold the water become docks as the level drops.">El nivel del lago de Valle de Bravo sube y baja según la época del año. En lugar de defenderse de esa oscilación, el proyecto la incorpora: está hecho para hundirse a propósito, y los muros que contienen el agua se convierten en muelles cuando el nivel desciende.</p>
-          <p data-es="Los ejes de las escalinatas que suben y bajan ordenan miradores y vistas al horizonte, y alojan el centro de información. La materialidad pétrea es deliberada: el edificio se mimetiza con el entorno y no le roba atención al paisaje."
+          <p class="more-text" hidden data-es="Los ejes de las escalinatas que suben y bajan ordenan miradores y vistas al horizonte, y alojan el centro de información. La materialidad pétrea es deliberada: el edificio se mimetiza con el entorno y no le roba atención al paisaje."
              data-en="The axes of the rising and falling stairs organize lookouts and views to the horizon, and house the information center. The stone materiality is deliberate: the building blends into its surroundings rather than stealing attention from the landscape.">Los ejes de las escalinatas que suben y bajan ordenan miradores y vistas al horizonte, y alojan el centro de información. La materialidad pétrea es deliberada: el edificio se mimetiza con el entorno y no le roba atención al paisaje.</p>
+          <button type="button" class="readmore"
+            data-es="Leer más" data-en="Read more"
+            data-es-less="Leer menos" data-en-less="Read less">Leer más</button>
           <span class="credit" data-es="En coautoría con Eduardo Márquez y Daniela Retana." data-en="Co-authored with Eduardo Márquez and Daniela Retana.">En coautoría con Eduardo Márquez y Daniela Retana.</span>
           <ul class="tags">
             <li data-es="Paisaje" data-en="Landscape">Paisaje</li>
@@ -426,8 +488,11 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
           <h3 data-es="Estancia Artística" data-en="Artists' Residence">Estancia Artística</h3>
           <p data-es="Residencia temporal para artistas que buscan explorar su trabajo fuera del estudio propio, con talleres diseñados para escultura, pintura y música. Los volúmenes truncados invertidos hacen símil con la peña que domina el sitio."
              data-en="A temporary residence for artists exploring work away from their own studio, with workshops designed for sculpture, painting and music. The inverted truncated volumes echo the rock formation that dominates the site.">Residencia temporal para artistas que buscan explorar su trabajo fuera del estudio propio, con talleres diseñados para escultura, pintura y música. Los volúmenes truncados invertidos hacen símil con la peña que domina el sitio.</p>
-          <p data-es="El patio interior con espejo de agua refresca el conjunto frente al calor de la región. La planta en claustro vuelca hacia ese patio las circulaciones y los espacios de triple altura, que quedan destinados al descanso."
+          <p class="more-text" hidden data-es="El patio interior con espejo de agua refresca el conjunto frente al calor de la región. La planta en claustro vuelca hacia ese patio las circulaciones y los espacios de triple altura, que quedan destinados al descanso."
              data-en="The interior courtyard with its reflecting pool cools the complex against the regional heat. The cloister plan turns the circulation and the triple-height spaces toward that courtyard, which is given over to rest.">El patio interior con espejo de agua refresca el conjunto frente al calor de la región. La planta en claustro vuelca hacia ese patio las circulaciones y los espacios de triple altura, que quedan destinados al descanso.</p>
+          <button type="button" class="readmore"
+            data-es="Leer más" data-en="Read more"
+            data-es-less="Leer menos" data-en-less="Read less">Leer más</button>
           <span class="credit" data-es="En coautoría con Sofía Olviera." data-en="Co-authored with Sofía Olviera.">En coautoría con Sofía Olviera.</span>
           <ul class="tags">
             <li data-es="Claustro" data-en="Cloister">Claustro</li>
@@ -457,8 +522,11 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
           <h3 data-es="Mobiliario Público con Técnicas Vernáculas" data-en="Public Furniture with Vernacular Techniques">Mobiliario Público con Técnicas Vernáculas</h3>
           <p data-es="De una visita a Santa Elena quedó una imagen: una plaza donde el sol impedía que la gente se reuniera. El proyecto responde con asientos de piedra caliza de la zona, estructura de bambú y teja de bambú."
              data-en="A visit to Santa Elena left one image behind: a plaza where the sun kept people from gathering. The project answers with seating in local limestone, a bamboo structure and bamboo shingle.">De una visita a Santa Elena quedó una imagen: una plaza donde el sol impedía que la gente se reuniera. El proyecto responde con asientos de piedra caliza de la zona, estructura de bambú y teja de bambú.</p>
-          <p data-es="El encargo pedía técnicas vernáculas y materiales del sitio. La entrega incluye un manual de construcción para que la comunidad pueda replicar los módulos por su cuenta: el proyecto se mide por si alguien puede volver a construirlo sin nosotros."
+          <p class="more-text" hidden data-es="El encargo pedía técnicas vernáculas y materiales del sitio. La entrega incluye un manual de construcción para que la comunidad pueda replicar los módulos por su cuenta: el proyecto se mide por si alguien puede volver a construirlo sin nosotros."
              data-en="The brief called for vernacular techniques and site materials. The deliverable includes a construction manual so the community can replicate the modules on its own: the project is measured by whether someone can rebuild it without us.">El encargo pedía técnicas vernáculas y materiales del sitio. La entrega incluye un manual de construcción para que la comunidad pueda replicar los módulos por su cuenta: el proyecto se mide por si alguien puede volver a construirlo sin nosotros.</p>
+          <button type="button" class="readmore"
+            data-es="Leer más" data-en="Read more"
+            data-es-less="Leer menos" data-en-less="Read less">Leer más</button>
           <ul class="tags">
             <li data-es="Piedra caliza" data-en="Limestone">Piedra caliza</li>
             <li data-es="Bambú" data-en="Bamboo">Bambú</li>
@@ -479,16 +547,19 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
       <article class="project reveal">
         <div class="project__media">
           <span class="project__year">2026</span>
-          <img src="assets/img/ws-01-construccion.webp" loading="lazy" decoding="async"
-               alt="Fotografía de obra: una persona aplicando mezcla de barro sobre la estructura de madera de un muro, dentro del prototipo de casa.">
+          <img src="assets/img/ws-04-avance.webp" loading="lazy" decoding="async"
+               alt="Prototipo de casa de bajo impacto terminado en su estructura: cubierta a dos aguas, muros de paja y madera, andamios alrededor.">
         </div>
         <div class="project__body">
           <span class="project__kicker" data-es="Obra · Low Impact Technologies · Politecnico di Torino" data-en="Construction · Low Impact Technologies · Politecnico di Torino">Obra · Low Impact Technologies · Politecnico di Torino</span>
           <h3 data-es="Taller de Construcción de Bajo Impacto" data-en="Low-Impact Construction Workshop">Taller de Construcción de Bajo Impacto</h3>
           <p data-es="Construcción, con el resto del grupo, de un prototipo real de vivienda diseñado por el profesor del curso. Mezclar barro con paja a mano durante el invierno de Turín, y levantar muros y cubierta con madera, corcho y materiales de bajo impacto."
              data-en="Building, with the rest of the group, a full-scale housing prototype designed by the course professor. Mixing mud and straw by hand through the Turin winter, and raising walls and roof with timber, cork and low-impact materials.">Construcción, con el resto del grupo, de un prototipo real de vivienda diseñado por el profesor del curso. Mezclar barro con paja a mano durante el invierno de Turín, y levantar muros y cubierta con madera, corcho y materiales de bajo impacto.</p>
-          <p data-es="Es el único proyecto de este portafolio que existe fuera de la representación: aquí el material se comporta, resiste y falla, no se renderiza."
+          <p class="more-text" hidden data-es="Es el único proyecto de este portafolio que existe fuera de la representación: aquí el material se comporta, resiste y falla, no se renderiza."
              data-en="It is the only project in this portfolio that exists outside representation: here the material behaves, resists and fails — it is not rendered.">Es el único proyecto de este portafolio que existe fuera de la representación: aquí el material se comporta, resiste y falla, no se renderiza.</p>
+          <button type="button" class="readmore"
+            data-es="Leer más" data-en="Read more"
+            data-es-less="Leer menos" data-en-less="Read less">Leer más</button>
           <ul class="tags">
             <li data-es="Barro y paja" data-en="Mud and straw">Barro y paja</li>
             <li data-es="Obra a escala real" data-en="Full-scale build">Obra a escala real</li>
@@ -503,9 +574,9 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
         <button type="button" class="pic" data-full="assets/img/ws-03-muro.webp"
           data-cap-es="Construcción del muro interior sobre andamio, junto a Clara, compañera del curso." data-cap-en="Building the interior wall from scaffolding, alongside Clara, a coursemate.">
           <img src="assets/img/ws-03-muro.webp" loading="lazy" decoding="async" alt="Dos personas sobre un andamio construyendo un muro interior de la casa, con estructura de madera a la vista."></button>
-        <button type="button" class="pic" data-full="assets/img/ws-04-avance.webp"
-          data-cap-es="El prototipo con la estructura y la envolvente resueltas al cierre del taller." data-cap-en="The prototype with structure and envelope resolved at the close of the workshop.">
-          <img src="assets/img/ws-04-avance.webp" loading="lazy" decoding="async" alt="Vista exterior del prototipo de casa terminado en su estructura: cubierta a dos aguas, muros de paja y madera, andamios alrededor."></button>
+        <button type="button" class="pic" data-full="assets/img/ws-01-construccion.webp"
+          data-cap-es="Aplicación de la mezcla sobre la estructura de madera del muro." data-cap-en="Applying the mix onto the timber wall structure.">
+          <img src="assets/img/ws-01-construccion.webp" loading="lazy" decoding="async" alt="Una persona aplicando mezcla de barro sobre la estructura de madera de un muro, dentro del prototipo de casa."></button>
       </div>
 
       <!-- ---------- 06 · SHARKLAS ---------- -->
@@ -521,8 +592,11 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
           <span class="metric" data-es="+1,000 unidades vendidas · Patente registrada" data-en="1,000+ units sold · Registered patent">+1,000 unidades vendidas · Patente registrada</span>
           <p data-es="Rediseño completo del producto estrella de la marca en goma EVA reciclada: de la ideación y los bocetos a mano a la especificación técnica y el producto manufacturado, coordinando iteraciones con fabricantes internacionales."
              data-en="Complete redesign of the brand's flagship product in recycled EVA foam: from ideation and hand sketches through technical specification and the manufactured product, coordinating iterations with international manufacturers.">Rediseño completo del producto estrella de la marca en goma EVA reciclada: de la ideación y los bocetos a mano a la especificación técnica y el producto manufacturado, coordinando iteraciones con fabricantes internacionales.</p>
-          <p data-es="Dirección del universo visual completo: identidad, la mascota Sharkman, el juego de cartas Shark Clash, la línea de ropa adulta e infantil, el empaque y un sistema de charms coleccionables. Los drops Golden Maya y Fueguito fueron los de mayor volumen comercial."
+          <p class="more-text" hidden data-es="Dirección del universo visual completo: identidad, la mascota Sharkman, el juego de cartas Shark Clash, la línea de ropa adulta e infantil, el empaque y un sistema de charms coleccionables. Los drops Golden Maya y Fueguito fueron los de mayor volumen comercial."
              data-en="Direction of the complete visual universe: identity, the Sharkman mascot, the Shark Clash card game, adult and kids apparel, packaging and a collectible charm system. The Golden Maya and Fueguito drops were the highest-volume releases.">Dirección del universo visual completo: identidad, la mascota Sharkman, el juego de cartas Shark Clash, la línea de ropa adulta e infantil, el empaque y un sistema de charms coleccionables. Los drops Golden Maya y Fueguito fueron los de mayor volumen comercial.</p>
+          <button type="button" class="readmore"
+            data-es="Leer más" data-en="Read more"
+            data-es-less="Leer menos" data-en-less="Read less">Leer más</button>
           <ul class="tags">
             <li data-es="Goma EVA reciclada" data-en="Recycled EVA">Goma EVA reciclada</li>
             <li data-es="Identidad" data-en="Identity">Identidad</li>
@@ -569,9 +643,8 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
           data-cap-es="Empaque reutilizable. Bolsa de marca pensada para sustituir el empaque desechable." data-cap-en="Reusable packaging. Branded bag designed to replace disposable packaging.">
           <img src="assets/img/sh-13-ecobag.webp" loading="lazy" decoding="async" alt="Bolsa de tela azul con cordón y el logotipo de la marca, junto a un par de chanclas negras sobre la arena."></button>
       </div>
-      <div class="more reveal"><button type="button" data-more="sharklas"
-        data-es="Ver 8 imágenes más" data-en="View 8 more images"
-        data-es-less="Ver menos" data-en-less="View less">Ver 8 imágenes más</button></div>
+      <div class="less" data-less="sharklas" hidden><button type="button"
+        data-es="Ver menos" data-en="View less">Ver menos</button></div>
 
     </div>
   </div>
@@ -609,25 +682,22 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
         <button type="button" class="pic" data-full="assets/img/thesis-04.webp"
           data-cap-es="Topografía: modelo de curvas de nivel del sitio." data-cap-en="Topography: contour model of the site.">
           <img src="assets/img/thesis-04.webp" loading="lazy" decoding="async" alt="Lámina de topografía con curvas de nivel densas en magenta sobre el perímetro del territorio."></button>
-        <button type="button" class="pic" data-full="assets/img/thesis-05.webp" hidden
+        <button type="button" class="pic" data-full="assets/img/thesis-05.webp"
           data-cap-es="Cartografía de usos de suelo y estructura hidrológica." data-cap-en="Land-use and hydrological structure mapping.">
           <img src="assets/img/thesis-05.webp" loading="lazy" decoding="async" alt="Mapa temático de usos de suelo en rojos, azules y amarillos con la red hidrológica sobrepuesta."></button>
-        <button type="button" class="pic" data-full="assets/img/thesis-06.webp" hidden
+        <button type="button" class="pic" data-full="assets/img/thesis-06.webp"
           data-cap-es="Contexto histórico y morfología urbana." data-cap-en="Historical context and urban morphology.">
           <img src="assets/img/thesis-06.webp" loading="lazy" decoding="async" alt="Lámina con línea de tiempo, mancha urbana y fotografía de un camino de terracería hacia la montaña."></button>
-        <button type="button" class="pic" data-full="assets/img/thesis-07.webp" hidden
+        <button type="button" class="pic" data-full="assets/img/thesis-07.webp"
           data-cap-es="Sección transversal: la autoconstrucción sobre la pendiente." data-cap-en="Cross-section: self-built housing on the slope.">
           <img src="assets/img/thesis-07.webp" loading="lazy" decoding="async" alt="Sección transversal del terreno en rosa mostrando viviendas escalonadas sobre la pendiente."></button>
-        <button type="button" class="pic" data-full="assets/img/thesis-08.webp" hidden
+        <button type="button" class="pic" data-full="assets/img/thesis-08.webp"
           data-cap-es="Crecimiento de la mancha urbana, 2003–2024." data-cap-en="Urban sprawl growth, 2003–2024.">
           <img src="assets/img/thesis-08.webp" loading="lazy" decoding="async" alt="Serie de tres mapas en verde que comparan el crecimiento de la mancha urbana entre 2003 y 2024."></button>
-        <button type="button" class="pic" data-full="assets/img/thesis-09.webp" hidden
+        <button type="button" class="pic" data-full="assets/img/thesis-09.webp"
           data-cap-es="Síntesis: trazo propuesto de la frontera de contención." data-cap-en="Synthesis: proposed containment boundary.">
           <img src="assets/img/thesis-09.webp" loading="lazy" decoding="async" alt="Mapa de síntesis a color con el trazo propuesto de la frontera de contención urbana y su leyenda."></button>
       </div>
-      <div class="more reveal"><button type="button" data-more="tesis"
-        data-es="Ver 5 imágenes más" data-en="View 5 more images"
-        data-es-less="Ver menos" data-en-less="View less">Ver 5 imágenes más</button></div>
         </div>
       </article>
 
@@ -665,7 +735,7 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
             </li>
             <li>
               <strong>The Heart of the City and Mid-20th-Century Latin American Universities and Public Spaces</strong>
-              <em>2026</em>
+              <em>2026 · Politecnico di Torino</em>
               <span data-es="Investigación interseccional que cruza el concepto del CIAM VIII con lo que ocurría simultáneamente en América Latina y sus universidades. Coautoría con Lotte Rombaut y Ana Mulet."
                     data-en="Intersectional research crossing the CIAM VIII concept with what was happening simultaneously in Latin America and its universities. Co-authored with Lotte Rombaut and Ana Mulet.">Investigación interseccional que cruza el concepto del CIAM VIII con lo que ocurría simultáneamente en América Latina y sus universidades. Coautoría con Lotte Rombaut y Ana Mulet.</span>
             </li>
@@ -676,13 +746,13 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
             </li>
             <li>
               <strong data-es="En Defensa del Graffiti como Herramienta de Arquitectura Menor" data-en="In Defense of Graffiti as a Tool of Minor Architecture">En Defensa del Graffiti como Herramienta de Arquitectura Menor</strong>
-              <em>2024</em>
+              <em>2024 · UNAM</em>
               <span data-es="El graffiti leído como expresión arquitectónica y como libertinaje: una forma de apropiación y reapropiación del espacio público."
                     data-en="Graffiti read as architectural expression and as licence: a form of appropriation and reappropriation of public space.">El graffiti leído como expresión arquitectónica y como libertinaje: una forma de apropiación y reapropiación del espacio público.</span>
             </li>
             <li>
               <strong data-es="Los Videojuegos como el Octavo Arte" data-en="Video Games as the Eighth Art">Los Videojuegos como el Octavo Arte</strong>
-              <em>2023</em>
+              <em>2023 · UNAM</em>
               <span data-es="Marco teórico kantiano y estructuralista sobre el videojuego como disciplina artística."
                     data-en="A Kantian and structuralist framework for the video game as an artistic discipline.">Marco teórico kantiano y estructuralista sobre el videojuego como disciplina artística.</span>
             </li>
@@ -897,10 +967,10 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
       var t = el.getAttribute('data-' + l);
       if (t !== null) el.textContent = t;
     });
-    // Botones "ver más": conservan su estado abierto/cerrado al cambiar idioma
-    document.querySelectorAll('[data-more]').forEach(function(b){
-      var open = b.getAttribute('aria-expanded') === 'true';
-      b.textContent = open ? b.getAttribute('data-' + l + '-less') : b.getAttribute('data-' + l);
+    // "Leer más": conserva su estado abierto/cerrado al cambiar de idioma
+    document.querySelectorAll('.readmore').forEach(function(b){
+      var abierto = b.getAttribute('aria-expanded') === 'true';
+      b.textContent = abierto ? b.getAttribute('data-' + l + '-less') : b.getAttribute('data-' + l);
     });
     document.querySelectorAll('[data-set-lang]').forEach(function(b){
       b.setAttribute('aria-pressed', String(b.dataset.setLang === l));
@@ -923,34 +993,100 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
   document.getElementById('year').textContent = new Date().getFullYear();
 
   /* ============================================================
-     3. "VER MÁS" — máximo 4 piezas visibles por proyecto.
-        Mostrar catorce fotos de golpe satura la lectura.
+     3. GALERÍAS: "+N" sobre la última miniatura visible
+        Marcar la cuarta pieza con el velo evita gastar una fila
+        entera de la página en un botón.
      ============================================================ */
-  document.querySelectorAll('[data-more]').forEach(function(btn){
-    btn.setAttribute('aria-expanded','false');
-    btn.addEventListener('click', function(){
-      var g = document.querySelector('[data-gallery="' + btn.dataset.more + '"]');
-      var hidden = g.querySelectorAll('button.pic[hidden]');
-      var open = btn.getAttribute('aria-expanded') === 'true';
-      if (open){
-        // volver a ocultar todo lo que exceda las 4 primeras
-        g.querySelectorAll('button.pic').forEach(function(p,i){ if (i >= 4) p.hidden = true; });
-        btn.setAttribute('aria-expanded','false');
-        btn.textContent = btn.getAttribute('data-' + lang);
-        g.scrollIntoView({behavior:'smooth', block:'nearest'});
-      } else {
-        hidden.forEach(function(p){ p.hidden = false; });
-        btn.setAttribute('aria-expanded','true');
-        btn.textContent = btn.getAttribute('data-' + lang + '-less');
-      }
+  var VISIBLES = 4;
+  function marcarMas(g){
+    var todas = g.querySelectorAll('button.pic');
+    var ocultas = g.querySelectorAll('button.pic[hidden]').length;
+    todas.forEach(function(b){ b.classList.remove('has-more'); b.removeAttribute('data-more-n'); });
+    if (!ocultas) return;
+    var ultima = todas[VISIBLES - 1];
+    if (ultima){ ultima.classList.add('has-more'); ultima.setAttribute('data-more-n', ocultas); }
+  }
+  function expandir(g){
+    g.querySelectorAll('button.pic[hidden]').forEach(function(b){ b.hidden = false; });
+    marcarMas(g);
+    var l = document.querySelector('[data-less="' + g.dataset.gallery + '"]');
+    if (l) l.hidden = false;
+  }
+  function plegar(g){
+    g.querySelectorAll('button.pic').forEach(function(b,i){ if (i >= VISIBLES) b.hidden = true; });
+    marcarMas(g);
+    var l = document.querySelector('[data-less="' + g.dataset.gallery + '"]');
+    if (l) l.hidden = true;
+    g.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+  document.querySelectorAll('[data-gallery]').forEach(marcarMas);
+  document.querySelectorAll('[data-less]').forEach(function(w){
+    w.querySelector('button').addEventListener('click', function(){
+      plegar(document.querySelector('[data-gallery="' + w.dataset.less + '"]'));
     });
   });
+
+  /* ============================================================
+     3b. "LEER MÁS" EN LAS DESCRIPCIONES
+     ============================================================ */
+  document.querySelectorAll('.readmore').forEach(function(btn){
+    btn.setAttribute('aria-expanded','false');
+    var t = btn.parentNode.querySelector('.more-text');
+    btn.addEventListener('click', function(){
+      var abierto = btn.getAttribute('aria-expanded') === 'true';
+      if (t) t.hidden = abierto;
+      btn.setAttribute('aria-expanded', String(!abierto));
+      btn.textContent = abierto ? btn.getAttribute('data-' + lang)
+                                : btn.getAttribute('data-' + lang + '-less');
+    });
+  });
+
+  /* ============================================================
+     3c. CARRUSEL DEL ENCABEZADO
+        Fundido cruzado, pausa al pasar el cursor y al salir de la
+        pestaña. No avanza solo si se pidió reducir el movimiento.
+     ============================================================ */
+  (function(){
+    var cont = document.getElementById('slides');
+    if (!cont) return;
+    var ims = cont.querySelectorAll('img'), dots = document.getElementById('dots');
+    var i = 0, t = null, quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    ims.forEach(function(_, k){
+      var d = document.createElement('button');
+      d.type = 'button'; d.setAttribute('role','tab');
+      d.setAttribute('aria-label', 'Imagen ' + (k + 1) + ' de ' + ims.length);
+      d.setAttribute('aria-current', String(k === 0));
+      d.addEventListener('click', function(){ ir(k); reiniciar(); });
+      dots.appendChild(d);
+    });
+    function ir(k){
+      ims[i].classList.remove('is-on'); dots.children[i].setAttribute('aria-current','false');
+      i = (k + ims.length) % ims.length;
+      ims[i].classList.add('is-on'); dots.children[i].setAttribute('aria-current','true');
+    }
+    function reiniciar(){ clearInterval(t); if (!quieto) t = setInterval(function(){ ir(i + 1); }, 4600); }
+    cont.addEventListener('mouseenter', function(){ clearInterval(t); });
+    cont.addEventListener('mouseleave', reiniciar);
+    document.addEventListener('visibilitychange', function(){
+      if (document.hidden) clearInterval(t); else reiniciar();
+    });
+    reiniciar();
+  })();
 
   /* ============================================================ 4. FADE-IN AL SCROLL ============================================================ */
   var io = new IntersectionObserver(function(en){
     en.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); } });
-  }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+  }, { rootMargin:'0px 0px -12% 0px', threshold:0.04 });
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  /* Escalonado: las miniaturas de una galería entran una tras otra,
+     no todas de golpe. Es lo que da la sensación de recorrido. */
+  document.querySelectorAll('[data-gallery]').forEach(function(g){
+    g.querySelectorAll('button.pic').forEach(function(b,k){
+      b.style.setProperty('--d', Math.min(k, 6) * 85 + 'ms');
+      b.classList.add('reveal'); io.observe(b);
+    });
+  });
 
   /* ============================================================
      5. LIGHTBOX
@@ -994,7 +1130,10 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
   function step(d){ idx = (idx + d + group.length) % group.length; show(); }
 
   document.querySelectorAll('button.pic').forEach(function(b){
-    b.addEventListener('click', function(){ open(b); });
+    b.addEventListener('click', function(){
+      if (b.classList.contains('has-more')){ expandir(b.closest('[data-gallery]')); return; }
+      open(b);
+    });
   });
   document.getElementById('lbClose').addEventListener('click', close);
   document.getElementById('lbPrev').addEventListener('click', function(){ step(-1); });
