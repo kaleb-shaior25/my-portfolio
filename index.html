@@ -144,7 +144,13 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
   .project{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:52px;align-items:center}
   .project--flip .project__media{order:2}
 }
-.project__media{position:relative;overflow:hidden;background:var(--hueso-alt)}
+.project__media{position:relative;overflow:hidden;background:var(--hueso-alt);
+  display:block;width:100%;padding:0;text-align:left;border:0;cursor:zoom-in}
+.project__media::after{content:'+';position:absolute;right:10px;bottom:10px;z-index:2;
+  font-family:var(--serif-no);font-weight:900;font-size:1.6rem;line-height:1;
+  color:var(--hueso);background:var(--vino);width:36px;height:36px;
+  display:grid;place-items:center;opacity:0;transition:opacity .3s cubic-bezier(.4,0,.2,1)}
+.project__media:hover::after,.project__media:focus-visible::after{opacity:1}
 .project__media img{width:100%;aspect-ratio:16/10;object-fit:cover;transition:transform .7s cubic-bezier(.2,.7,.3,1)}
 .project__media:hover img{transform:scale(1.03)}
 .project__year{position:absolute;top:0;left:0;z-index:2;background:var(--vino);color:var(--hueso);
@@ -391,11 +397,11 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
 
       <!-- ---------- 01 · NUEVO UXMAL / MUSEO PUUC ---------- -->
       <article class="project reveal">
-        <div class="project__media">
+        <button type="button" class="project__media pic-main" data-full="assets/img/nu-01-museo-puuc.webp"
+          data-cap-es="Museo Puuc. Vista general del conjunto: volúmenes circulares de tierra y madera integrados en la vegetación existente." data-cap-en="Puuc Museum. Overall view: circular earth-and-timber volumes set into the existing vegetation." aria-label="Ampliar imagen">
           <span class="project__year">2025</span>
-          <img src="assets/img/nu-01-museo-puuc.webp" loading="lazy" decoding="async"
-               alt="Render exterior del Museo Puuc: volúmenes circulares de tierra y madera entre vegetación tropical, con un sendero de piedra que conduce al acceso.">
-        </div>
+          <img src="assets/img/nu-01-museo-puuc.webp" loading="lazy" decoding="async" alt="Render exterior del Museo Puuc: volúmenes circulares de tierra y madera entre vegetación tropical, con un sendero de piedra que conduce al acceso.">
+        </button>
         <div class="project__body">
           <span class="project__kicker" data-es="Workshop internacional cooperativo · UNAM + UT Austin · Yucatán" data-en="International cooperative workshop · UNAM + UT Austin · Yucatán">Workshop internacional cooperativo · UNAM + UT Austin · Yucatán</span>
           <h3 data-es="Museo Puuc, Parque Nuevo Uxmal" data-en="Puuc Museum, Parque Nuevo Uxmal">Museo Puuc, Parque Nuevo Uxmal</h3>
@@ -448,11 +454,11 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
 
       <!-- ---------- 02 · CENTRO DE VISITANTES ---------- -->
       <article class="project project--flip reveal">
-        <div class="project__media">
+        <button type="button" class="project__media pic-main" data-full="assets/img/cv-01-escalinata-lago.webp"
+          data-cap-es="Centro de Visitantes. Los muros que contienen el agua enmarcan la vista al lago y se vuelven muelles cuando el nivel baja." data-cap-en="Visitor Center. The retaining walls frame the view to the lake and become docks as the water level drops." aria-label="Ampliar imagen">
           <span class="project__year">2024</span>
-          <img src="assets/img/cv-01-escalinata-lago.webp" loading="lazy" decoding="async"
-               alt="Render del centro de visitantes: dos muros de piedra oscura enmarcan la plataforma escalonada y la vista al lago de Valle de Bravo bajo un cielo cargado.">
-        </div>
+          <img src="assets/img/cv-01-escalinata-lago.webp" loading="lazy" decoding="async" alt="Render del centro de visitantes: dos muros de piedra oscura enmarcan la plataforma escalonada y la vista al lago de Valle de Bravo bajo un cielo cargado.">
+        </button>
         <div class="project__body">
           <span class="project__kicker" data-es="Proyecto académico · Valle de Bravo" data-en="Academic project · Valle de Bravo">Proyecto académico · Valle de Bravo</span>
           <h3 data-es="Centro de Visitantes" data-en="Visitor Center">Centro de Visitantes</h3>
@@ -482,11 +488,11 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
 
       <!-- ---------- 03 · ESTANCIA ARTÍSTICA ---------- -->
       <article class="project reveal">
-        <div class="project__media">
+        <button type="button" class="project__media pic-main" data-full="assets/img/ea-01-patio-central.webp"
+          data-cap-es="Estancia Artística. El patio central con espejo de agua, en torno al cual se organiza el claustro." data-cap-en="Artists' Residence. The central courtyard with its reflecting pool, around which the cloister is organized." aria-label="Ampliar imagen">
           <span class="project__year">2023</span>
-          <img src="assets/img/ea-01-patio-central.webp" loading="lazy" decoding="async"
-               alt="Render del patio central de la estancia artística: columnata de concreto en torno a un espejo de agua, con un árbol al centro.">
-        </div>
+          <img src="assets/img/ea-01-patio-central.webp" loading="lazy" decoding="async" alt="Render del patio central de la estancia artística: columnata de concreto en torno a un espejo de agua, con un árbol al centro.">
+        </button>
         <div class="project__body">
           <span class="project__kicker" data-es="Proyecto académico · Peña de Bernal, Querétaro" data-en="Academic project · Peña de Bernal, Querétaro">Proyecto académico · Peña de Bernal, Querétaro</span>
           <h3 data-es="Estancia Artística" data-en="Artists' Residence">Estancia Artística</h3>
@@ -516,11 +522,11 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
 
       <!-- ---------- 04 · MOBILIARIO PÚBLICO ---------- -->
       <article class="project project--flip reveal">
-        <div class="project__media">
+        <button type="button" class="project__media pic-main" data-full="assets/img/mp-01-plaza-santa-elena.webp"
+          data-cap-es="Mobiliario Público. La plaza de Santa Elena con los módulos de sombra en piedra caliza y bambú." data-cap-en="Public Furniture. The Santa Elena plaza with the shade modules in limestone and bamboo." aria-label="Ampliar imagen">
           <span class="project__year">2026</span>
-          <img src="assets/img/mp-01-plaza-santa-elena.webp" loading="lazy" decoding="async"
-               alt="Render de la plaza de Santa Elena con una serie de pérgolas de bambú que dan sombra a bancas de piedra caliza, con gente caminando.">
-        </div>
+          <img src="assets/img/mp-01-plaza-santa-elena.webp" loading="lazy" decoding="async" alt="Render de la plaza de Santa Elena con una serie de pérgolas de bambú que dan sombra a bancas de piedra caliza, con gente caminando.">
+        </button>
         <div class="project__body">
           <span class="project__kicker" data-es="Low Impact Technologies · Politecnico di Torino · Santa Elena, Yucatán" data-en="Low Impact Technologies · Politecnico di Torino · Santa Elena, Yucatán">Low Impact Technologies · Politecnico di Torino · Santa Elena, Yucatán</span>
           <h3 data-es="Mobiliario Público con Técnicas Vernáculas" data-en="Public Furniture with Vernacular Techniques">Mobiliario Público con Técnicas Vernáculas</h3>
@@ -549,11 +555,11 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
 
       <!-- ---------- 05 · HANDS-ON WORKSHOP ---------- -->
       <article class="project reveal">
-        <div class="project__media">
+        <button type="button" class="project__media pic-main" data-full="assets/img/ws-04-avance.webp"
+          data-cap-es="Taller de construcción. El prototipo con la estructura y la envolvente resueltas al cierre del taller." data-cap-en="Construction workshop. The prototype with structure and envelope resolved at the close of the workshop." aria-label="Ampliar imagen">
           <span class="project__year">2026</span>
-          <img src="assets/img/ws-04-avance.webp" loading="lazy" decoding="async"
-               alt="Prototipo de casa de bajo impacto terminado en su estructura: cubierta a dos aguas, muros de paja y madera, andamios alrededor.">
-        </div>
+          <img src="assets/img/ws-04-avance.webp" loading="lazy" decoding="async" alt="Prototipo de casa de bajo impacto terminado en su estructura: cubierta a dos aguas, muros de paja y madera, andamios alrededor.">
+        </button>
         <div class="project__body">
           <span class="project__kicker" data-es="Obra · Low Impact Technologies · Politecnico di Torino" data-en="Construction · Low Impact Technologies · Politecnico di Torino">Obra · Low Impact Technologies · Politecnico di Torino</span>
           <h3 data-es="Taller de Construcción de Bajo Impacto" data-en="Low-Impact Construction Workshop">Taller de Construcción de Bajo Impacto</h3>
@@ -585,11 +591,11 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
 
       <!-- ---------- 06 · SHARKLAS ---------- -->
       <article class="project project--flip reveal">
-        <div class="project__media">
+        <button type="button" class="project__media pic-main" data-full="assets/img/sh-01-golden-maya.webp"
+          data-cap-es="Golden Maya. Primer gran drop de Sharklas 2.0, sobre un tesoro maya perdido, con charms coleccionables." data-cap-en="Golden Maya. First major Sharklas 2.0 drop, themed on a lost Mayan treasure, with collectible charms." aria-label="Ampliar imagen">
           <span class="project__year">2024 —</span>
-          <img src="assets/img/sh-01-golden-maya.webp" loading="lazy" decoding="async"
-               alt="Ilustración promocional de las Sharklas doradas modelo Golden Maya con charms, flotando sobre un paisaje estilizado de pirámide maya.">
-        </div>
+          <img src="assets/img/sh-01-golden-maya.webp" loading="lazy" decoding="async" alt="Ilustración promocional de las Sharklas doradas modelo Golden Maya con charms, flotando sobre un paisaje estilizado de pirámide maya.">
+        </button>
         <div class="project__body">
           <span class="project__kicker" data-es="Diseño de producto · Dirección de arte" data-en="Product design · Art direction">Diseño de producto · Dirección de arte</span>
           <h3>Sharklas<sup>®</sup></h3>
@@ -845,7 +851,7 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
               <li>InDesign <b>·</b> <span data-es="avanzado" data-en="advanced">avanzado</span></li>
               <li>Illustrator <b>·</b> <span data-es="avanzado" data-en="advanced">avanzado</span></li>
               <li>Photoshop <b>·</b> <span data-es="avanzado" data-en="advanced">avanzado</span></li>
-              <li>Lightroom</li>
+              <li>Lightroom <b>·</b> <span data-es="intermedio" data-en="intermediate">intermedio</span></li>
               <li>DaVinci Resolve</li>
               <li data-es="Fotografía digital" data-en="Digital photography">Fotografía digital</li>
             </ul>
@@ -855,7 +861,7 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
             <ul>
               <li>AutoCAD <b>·</b> <span data-es="avanzado" data-en="advanced">avanzado</span></li>
               <li>SketchUp <b>·</b> <span data-es="intermedio-avanzado" data-en="upper-intermediate">intermedio-avanzado</span></li>
-              <li>Lumion</li>
+              <li>Lumion <b>·</b> <span data-es="avanzado" data-en="advanced">avanzado</span></li>
               <li>Revit <b>·</b> <span data-es="intermedio" data-en="intermediate">intermedio</span></li>
             </ul>
           </div>
@@ -864,6 +870,7 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
             <ul>
               <li>ArcGIS Pro</li>
               <li>QGIS</li>
+              <li>Google Earth Engine</li>
               <li>Python</li>
             </ul>
           </div>
@@ -1112,16 +1119,34 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
     var b = group[idx];
     var c = b.getAttribute('data-cap-' + lang) || '';
     lbCap.textContent = c;
-    lbImg.alt = c || b.querySelector('img').alt;
+    var im = b.querySelector('img');
+    lbImg.alt = c || (im ? im.alt : '');
     lbCount.textContent = (idx + 1) + ' / ' + group.length;
   }
   function show(){ lbImg.src = group[idx].dataset.full; setCap(); }
 
+  /* La imagen principal de un proyecto y su galería forman un solo
+     recorrido: la principal va primero, luego las piezas visibles. */
+  function galeriaDe(btn){
+    if (btn.classList.contains('pic-main')){
+      var art = btn.closest('.project'), g = art && art.nextElementSibling;
+      return (g && g.hasAttribute('data-gallery')) ? g : null;
+    }
+    return btn.closest('[data-gallery]');
+  }
+  function principalDe(g){
+    var prev = g && g.previousElementSibling;
+    return prev ? prev.querySelector('.pic-main') : null;
+  }
+
   function open(btn){
-    // solo las piezas visibles de esa galería forman el recorrido
-    group = Array.prototype.slice.call(
-      btn.closest('[data-gallery]').querySelectorAll('button.pic')
-    ).filter(function(b){ return !b.hidden; });
+    var g = galeriaDe(btn);
+    var principal = btn.classList.contains('pic-main') ? btn : principalDe(g);
+    group = [];
+    if (principal) group.push(principal);
+    if (g) Array.prototype.slice.call(g.querySelectorAll('button.pic')).forEach(function(b){
+      if (!b.hidden) group.push(b);
+    });
     idx = group.indexOf(btn);
     if (idx < 0){ group = [btn]; idx = 0; }
     lastFocus = btn; isOpen = true;
@@ -1140,6 +1165,9 @@ h1,h2,h3,h4{font-family:var(--serif-no);font-weight:900;line-height:1.02;margin:
       if (b.classList.contains('has-more')){ expandir(b.closest('[data-gallery]')); return; }
       open(b);
     });
+  });
+  document.querySelectorAll('.pic-main').forEach(function(b){
+    b.addEventListener('click', function(){ open(b); });
   });
   document.getElementById('lbClose').addEventListener('click', close);
   document.getElementById('lbPrev').addEventListener('click', function(){ step(-1); });
